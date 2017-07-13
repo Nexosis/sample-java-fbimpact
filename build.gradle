@@ -15,7 +15,7 @@ repositories {
 
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
-    compile 'com.nexosis:nexosisclient-java:1.0.2'
+    compile 'com.nexosis:nexosisclient-java:1.1.0'
     compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.5'
     compile group: 'commons-io', name: 'commons-io', version: '2.5'
 }

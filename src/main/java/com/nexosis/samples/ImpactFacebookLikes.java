@@ -17,10 +17,13 @@ public class ImpactFacebookLikes {
     private static final String path = System.getProperty("user.dir") + "/data";
 
     public static void main(String[] args) throws InterruptedException, IOException {
-        NexosisClient client = new NexosisClient();
+        NexosisClient client = new NexosisClient(
+                "0db997f5d3ed492b8d931a90452fb3cb",
+                "https://api.uat.nexosisdev.com/v1"
+        );
 
         try {
-            String dataSetName = "facebook-data-v2";
+            String dataSetName = "facebook-data-v3";
             String eventName = "api-announcement-reloaded";
             String sourceFile = path + "/facebook-data.csv";
             String resultsFile = path + "/impact-results.csv";
@@ -119,6 +122,9 @@ public class ImpactFacebookLikes {
 
     private static UUID runImpactAnalysis(NexosisClient client, String dataSetName, String eventName) throws NexosisClientException {
         // Change metadata for Impact analysis
+        SessionData sessionData = new SessionData();
+        sessionData.setDataSetName(dataSetName);
+
         Columns columns = new Columns();
         columns.setColumnMetadata("date", DataType.DATE, DataRole.TIMESTAMP);
         columns.setColumnMetadata("page_views", DataType.NUMERIC, DataRole.FEATURE);
@@ -128,10 +134,10 @@ public class ImpactFacebookLikes {
         columns.setColumnMetadata("total_page_likes", DataType.NUMERIC, DataRole.TARGET);
         columns.setColumnMetadata("daily_organic_likes", DataType.NUMERIC, DataRole.NONE);
         columns.setColumnMetadata("amount_spent", DataType.NUMERIC, DataRole.FEATURE);
+        sessionData.setColumns(columns);
 
         SessionResponse response = client.getSessions().analyzeImpact(
-                dataSetName,
-                columns,
+                sessionData,
                 eventName,
                 DateTime.parse("2017-03-15T00:00:00Z"),
                 DateTime.parse("2017-06-28T00:00:00Z"),
