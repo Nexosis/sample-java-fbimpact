@@ -17,10 +17,7 @@ public class ImpactFacebookLikes {
     private static final String path = System.getProperty("user.dir") + "/data";
 
     public static void main(String[] args) throws InterruptedException, IOException {
-        NexosisClient client = new NexosisClient(
-                "0db997f5d3ed492b8d931a90452fb3cb",
-                "https://api.uat.nexosisdev.com/v1"
-        );
+        NexosisClient client = new NexosisClient();
 
         try {
             String dataSetName = "facebook-data-v3";
